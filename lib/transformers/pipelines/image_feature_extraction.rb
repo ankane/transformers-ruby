@@ -29,7 +29,7 @@ module Transformers
     end
 
     def _forward(model_inputs)
-      model_outputs = @model.(**model_inputs.to_h)
+      model_outputs = @model.(**model_inputs)
       model_outputs
     end
 

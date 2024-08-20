@@ -22,6 +22,7 @@ module Transformers
     def to_h
       @data
     end
+    alias_method :to_hash, :to_h
 
     def [](item)
       @data[item]

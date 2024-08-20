@@ -62,7 +62,7 @@ module Transformers
     end
 
     def _forward(model_inputs)
-      @model.(**model_inputs.to_h)
+      @model.(**model_inputs)
     end
 
     def postprocess(model_outputs, function_to_apply: nil, top_k: 1, _legacy: true)
