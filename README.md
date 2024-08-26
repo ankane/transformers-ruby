@@ -41,9 +41,9 @@ query = "How many people live in London?"
 docs = ["Around 9 Million people live in London", "London is known for its financial district"]
 
 model = Transformers::SentenceTransformer.new("sentence-transformers/multi-qa-MiniLM-L6-cos-v1")
-query_emb = model.encode(query)
-doc_emb = model.encode(docs)
-scores = Torch.mm(Torch.tensor([query_emb]), Torch.tensor(doc_emb).transpose(0, 1))[0].cpu.to_a
+query_embedding = model.encode(query)
+doc_embeddings = model.encode(docs)
+scores = Torch.mm(Torch.tensor([query_embedding]), Torch.tensor(doc_embeddings).transpose(0, 1))[0].to_a
 doc_score_pairs = docs.zip(scores).sort_by { |d, s| -s }
 ```
 
