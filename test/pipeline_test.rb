@@ -13,6 +13,24 @@ class PipelineTest < Minitest::Test
     assert_equal 4, result[0][:end]
   end
 
+  def test_ner_aggregation_strategy
+    ner = Transformers.pipeline("ner", aggregation_strategy: "simple")
+    result = ner.("Ruby is a programming language created by Matz")
+    assert_equal 2, result.size
+
+    assert_equal "MISC", result[0][:entity_group]
+    assert_in_delta 0.9608, result[0][:score]
+    assert_equal "Ruby", result[0][:word]
+    assert_equal 0, result[0][:start]
+    assert_equal 4, result[0][:end]
+
+    assert_equal "PER", result[1][:entity_group]
+    assert_in_delta 0.9496, result[1][:score]
+    assert_equal "Matz", result[1][:word]
+    assert_equal 42, result[1][:start]
+    assert_equal 46, result[1][:end]
+  end
+
   def test_sentiment_analysis
     classifier = Transformers.pipeline("sentiment-analysis")
     result = classifier.("We are very happy to show you the 🤗 Transformers library.")

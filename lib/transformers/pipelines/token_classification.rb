@@ -288,8 +288,8 @@ module Transformers
     end
 
     def group_sub_entities(entities)
-      # # Get the first entity in the entity group
-      entity = entities[0][:entity].split("-", 1)[-1]
+      # Get the first entity in the entity group
+      entity = entities[0][:entity].split("-", 2)[-1]
       scores = entities.map { |entity| entity[:score] }
       tokens = entities.map { |entity| entity[:word] }
 
