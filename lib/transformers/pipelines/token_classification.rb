@@ -334,7 +334,7 @@ module Transformers
         # The split is meant to account for the "B" and "I" prefixes
         # Shouldn't merge if both entities are B-type
         bi, tag = get_tag(entity[:entity])
-        last_bi, last_tag = get_tag(entity_group_disagg[-1][:entity])
+        _last_bi, last_tag = get_tag(entity_group_disagg[-1][:entity])
 
         if tag == last_tag && bi != "B"
           # Modify subword type to be previous_type
