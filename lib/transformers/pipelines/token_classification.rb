@@ -62,7 +62,7 @@ module Transformers
 
       if !aggregation_strategy.nil?
         if aggregation_strategy.is_a?(String)
-          aggregation_strategy = AggregationStrategy.new(aggregation_strategy.upcase).to_s
+          aggregation_strategy = AggregationStrategy.new(aggregation_strategy.downcase).to_s
         end
         if (
           [AggregationStrategy::FIRST, AggregationStrategy::MAX, AggregationStrategy::AVERAGE].include?(aggregation_strategy) &&
@@ -277,6 +277,81 @@ module Transformers
         return entities
       end
       group_entities(entities)
+    end
+
+    def aggregate_word(entities, aggregation_strategy)
+      raise Todo
+    end
+
+    def aggregate_words(entities, aggregation_strategy)
+      raise Todo
+    end
+
+    def group_sub_entities(entities)
+      # # Get the first entity in the entity group
+      entity = entities[0][:entity].split("-", 1)[-1]
+      scores = entities.map { |entity| entity[:score] }
+      tokens = entities.map { |entity| entity[:word] }
+
+      entity_group = {
+        entity_group: entity,
+        score: scores.sum / scores.count.to_f,
+        word: @tokenizer.convert_tokens_to_string(tokens),
+        start: entities[0][:start],
+        end: entities[-1][:end]
+      }
+      entity_group
+    end
+
+    def get_tag(entity_name)
+      if entity_name.start_with?("B-")
+        bi = "B"
+        tag = entity_name[2..]
+      elsif entity_name.start_with?("I-")
+        bi = "I"
+        tag = entity_name[2..]
+      else
+        # It's not in B-, I- format
+        # Default to I- for continuation.
+        bi = "I"
+        tag = entity_name
+      end
+      [bi, tag]
+    end
+
+    def group_entities(entities)
+      entity_groups = []
+      entity_group_disagg = []
+
+      entities.each do |entity|
+        if entity_group_disagg.empty?
+          entity_group_disagg << entity
+          next
+        end
+
+        # If the current entity is similar and adjacent to the previous entity,
+        # append it to the disaggregated entity group
+        # The split is meant to account for the "B" and "I" prefixes
+        # Shouldn't merge if both entities are B-type
+        bi, tag = get_tag(entity[:entity])
+        last_bi, last_tag = get_tag(entity_group_disagg[-1][:entity])
+
+        if tag == last_tag && bi != "B"
+          # Modify subword type to be previous_type
+          entity_group_disagg << entity
+        else
+          # If the current entity is different from the previous entity
+          # aggregate the disaggregated entity group
+          entity_groups << group_sub_entities(entity_group_disagg)
+          entity_group_disagg = [entity]
+        end
+      end
+      if entity_group_disagg.any?
+        # it's the last entity, add it to the entity groups
+        entity_groups << group_sub_entities(entity_group_disagg)
+      end
+
+      entity_groups
     end
   end
 end

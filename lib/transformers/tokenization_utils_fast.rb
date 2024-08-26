@@ -91,6 +91,10 @@ module Transformers
       get_vocab
     end
 
+    def backend_tokenizer
+      @tokenizer
+    end
+
     def convert_tokens_to_ids(tokens)
       if tokens.nil?
         return nil
@@ -128,6 +132,10 @@ module Transformers
         tokens << @tokenizer.id_to_token(index)
       end
       tokens
+    end
+
+    def convert_tokens_to_string(tokens)
+      backend_tokenizer.decoder.decode(tokens)
     end
 
     private
