@@ -34,7 +34,7 @@ module Transformers
       end
 
       if function_to_apply.is_a?(String)
-        function_to_apply = ClassificationFunction.new(function_to_apply.upcase).to_s
+        function_to_apply = ClassificationFunction.new(function_to_apply.downcase).to_s
       end
 
       if !function_to_apply.nil?
