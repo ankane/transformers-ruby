@@ -2,6 +2,8 @@
 
 :slightly_smiling_face: State-of-the-art [transformers](https://github.com/huggingface/transformers) for Ruby
 
+For fast inference, check out [Informers](https://github.com/ankane/informers)
+
 [![Build Status](https://github.com/ankane/transformers-ruby/actions/workflows/build.yml/badge.svg)](https://github.com/ankane/transformers-ruby/actions)
 
 ## Installation
