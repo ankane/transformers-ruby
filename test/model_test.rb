@@ -24,7 +24,7 @@ class ModelTest < Minitest::Test
     model = Transformers::SentenceTransformer.new("sentence-transformers/multi-qa-MiniLM-L6-cos-v1")
     query_embedding = model.encode(query)
     doc_embeddings = model.encode(docs)
-    scores = Torch.mm(Torch.tensor([query_embedding]), Torch.tensor(doc_embeddings).transpose(0, 1))[0].to_a
+    scores = doc_embeddings.map { |e| e.zip(query_embedding).sum { |d, q| d * q } }
     doc_score_pairs = docs.zip(scores).sort_by { |d, s| -s }
 
     assert_equal "Around 9 Million people live in London", doc_score_pairs[0][0]
