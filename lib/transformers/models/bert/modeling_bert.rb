@@ -97,7 +97,7 @@ module Transformers
         @position_embedding_type = position_embedding_type || config.position_embedding_type || "absolute"
         if @position_embedding_type == "relative_key" || @position_embedding_type == "relative_key_query"
           @max_position_embeddings = config.max_position_embeddings
-          @distance_embedding = Torch:NN::Embedding.new(2 * config.max_position_embeddings - 1, @attention_head_size)
+          @distance_embedding = Torch::NN::Embedding.new(2 * config.max_position_embeddings - 1, @attention_head_size)
         end
 
         @is_decoder = config.is_decoder
