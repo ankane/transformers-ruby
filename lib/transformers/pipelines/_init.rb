@@ -86,6 +86,7 @@ module Transformers
   class << self
     def pipeline(
       task,
+      model_arg = nil,
       model: nil,
       config: nil,
       tokenizer: nil,
@@ -103,6 +104,13 @@ module Transformers
       pipeline_class: nil,
       **kwargs
     )
+      if !model_arg.nil?
+        if !model.nil?
+          raise ArgumentError, "Cannot pass multiple models"
+        end
+        model = model_arg
+      end
+
       model_kwargs ||= {}
       # Make sure we only pass use_auth_token once as a kwarg (it used to be possible to pass it in model_kwargs,
       # this is to keep BC).
