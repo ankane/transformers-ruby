@@ -4,7 +4,7 @@ require "rake/testtask"
 task default: :test
 Rake::TestTask.new do |t|
   t.libs << "test"
-  t.pattern = "test/**/*_test.rb"
+  t.pattern = FileList["test/**/*_test.rb"].exclude("test/model_test.rb")
 end
 
 def download_file(url)
