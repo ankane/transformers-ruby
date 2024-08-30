@@ -32,6 +32,9 @@ Embedding
 - [intfloat/e5-base-v2](#intfloate5-base-v2)
 - [BAAI/bge-base-en-v1.5](#baaibge-base-en-v15)
 - [Snowflake/snowflake-arctic-embed-m-v1.5](#snowflakesnowflake-arctic-embed-m-v15)
+
+Sparse embedding
+
 - [opensearch-project/opensearch-neural-sparse-encoding-v1](#opensearch-projectopensearch-neural-sparse-encoding-v1)
 
 ### sentence-transformers/all-MiniLM-L6-v2
