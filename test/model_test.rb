@@ -6,24 +6,24 @@ class ModelTest < Minitest::Test
   end
 
   # https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2
-  def test_sentence_transformers
+  def test_all_mini_lm
     sentences = ["This is an example sentence", "Each sentence is converted"]
 
-    model = Transformers::SentenceTransformer.new("sentence-transformers/all-MiniLM-L6-v2")
-    embeddings = model.encode(sentences)
+    model = Transformers.pipeline("embedding", "sentence-transformers/all-MiniLM-L6-v2")
+    embeddings = model.(sentences)
 
     assert_elements_in_delta [0.067657, 0.063496, 0.048713], embeddings[0][..2]
     assert_elements_in_delta [0.086439, 0.10276, 0.0053946], embeddings[1][..2]
   end
 
   # https://huggingface.co/sentence-transformers/multi-qa-MiniLM-L6-cos-v1
-  def test_sentence_transformers2
+  def test_multi_qa_minilm
     query = "How many people live in London?"
     docs = ["Around 9 Million people live in London", "London is known for its financial district"]
 
-    model = Transformers::SentenceTransformer.new("sentence-transformers/multi-qa-MiniLM-L6-cos-v1")
-    query_embedding = model.encode(query)
-    doc_embeddings = model.encode(docs)
+    model = Transformers.pipeline("embedding", "sentence-transformers/multi-qa-MiniLM-L6-cos-v1")
+    query_embedding = model.(query)
+    doc_embeddings = model.(docs)
     scores = doc_embeddings.map { |e| e.zip(query_embedding).sum { |d, q| d * q } }
     doc_score_pairs = docs.zip(scores).sort_by { |d, s| -s }
 
@@ -34,19 +34,17 @@ class ModelTest < Minitest::Test
   end
 
   # https://huggingface.co/mixedbread-ai/mxbai-embed-large-v1
-  def test_mixedbread
-    transform_query = lambda do |query|
-      "Represent this sentence for searching relevant passages: #{query}"
-    end
+  def test_mxbai_embed
+    query_prefix = "Represent this sentence for searching relevant passages: "
 
-    docs = [
-      transform_query.("puppy"),
+    input = [
+      query_prefix + "puppy",
       "The dog is barking",
       "The cat is purring"
     ]
 
-    model = Transformers::SentenceTransformer.new("mixedbread-ai/mxbai-embed-large-v1")
-    embeddings = model.encode(docs)
+    model = Transformers.pipeline("embedding", "mixedbread-ai/mxbai-embed-large-v1")
+    embeddings = model.(input, pooling: "cls", normalize: false)
 
     assert_elements_in_delta [-0.00624076, 0.12864432, 0.5248165], embeddings[0][..2]
     assert_elements_in_delta [-0.61227727, 1.4060247, -0.04079155], embeddings[-1][..2]
