@@ -756,28 +756,29 @@ module Transformers
           raise Todo
         end
 
+        model_class_name = model.class.name.split("::").last
         if unexpected_keys.length > 0
           archs = model.config.architectures.nil? ? [] : model.config.architectures
-          warner = archs.include?(model.class.name.split("::").last) ? Transformers.logger.method(:warn) : Transformers.logger.method(:info)
+          warner = archs.include?(model_class_name) ? Transformers.logger.method(:warn) : Transformers.logger.method(:info)
           warner.(
             "Some weights of the model checkpoint at #{pretrained_model_name_or_path} were not used when" +
-            " initializing #{model.class.name}: #{unexpected_keys}\n- This IS expected if you are" +
-            " initializing #{model.class.name} from the checkpoint of a model trained on another task or" +
+            " initializing #{model_class_name}: #{unexpected_keys}\n- This IS expected if you are" +
+            " initializing #{model_class_name} from the checkpoint of a model trained on another task or" +
             " with another architecture (e.g. initializing a BertForSequenceClassification model from a" +
             " BertForPreTraining model).\n- This IS NOT expected if you are initializing" +
-            " #{model.class.name} from the checkpoint of a model that you expect to be exactly identical" +
+            " #{model_class_name} from the checkpoint of a model that you expect to be exactly identical" +
             " (initializing a BertForSequenceClassification model from a BertForSequenceClassification model)."
           )
         else
-          Transformers.logger.info("All model checkpoint weights were used when initializing #{model.class.name}.\n")
+          Transformers.logger.info("All model checkpoint weights were used when initializing #{model_class_name}.\n")
         end
         if missing_keys.length > 0
-          Transformers.logger.info("Some weights of #{model.class.name} were not initialized from the model checkpoint at #{pretrained_model_name_or_path} and are newly initialized: #{missing_keys}\nYou should probably TRAIN this model on a down-stream task to be able to use it for predictions and inference.")
+          Transformers.logger.info("Some weights of #{model_class_name} were not initialized from the model checkpoint at #{pretrained_model_name_or_path} and are newly initialized: #{missing_keys}\nYou should probably TRAIN this model on a down-stream task to be able to use it for predictions and inference.")
         elsif mismatched_keys.length == 0
           Transformers.logger.info(
-            "All the weights of #{model.class.name} were initialized from the model checkpoint at" +
+            "All the weights of #{model_class_name} were initialized from the model checkpoint at" +
             " #{pretrained_model_name_or_path}.\nIf your task is similar to the task the model of the checkpoint" +
-            " was trained on, you can already use #{model.class.name} for predictions without further" +
+            " was trained on, you can already use #{model_class_name} for predictions without further" +
             " training."
           )
         end
