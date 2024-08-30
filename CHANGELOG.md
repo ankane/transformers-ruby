@@ -1,7 +1,7 @@
 ## 0.1.1 (unreleased)
 
 - Added `embedding` pipeline
-- Added `fast_init` option
+- Added experimental `fast_init` option
 - Improved performance of loading models
 - Fixed error with `aggregation_strategy` option
 

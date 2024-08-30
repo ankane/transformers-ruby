@@ -100,6 +100,7 @@ module Transformers
   end
 
   class << self
+    # experimental
     attr_accessor :fast_init
   end
   self.fast_init = false
