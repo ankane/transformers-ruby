@@ -23,6 +23,17 @@ gem "transformers-rb"
 
 ## Models
 
+Embedding
+
+- [sentence-transformers/all-MiniLM-L6-v2](#sentence-transformersall-MiniLM-L6-v2)
+- [sentence-transformers/multi-qa-MiniLM-L6-cos-v1](#sentence-transformersmulti-qa-MiniLM-L6-cos-v1)
+- [mixedbread-ai/mxbai-embed-large-v1](#mixedbread-aimxbai-embed-large-v1)
+- [thenlper/gte-small](#thenlpergte-small)
+- [intfloat/e5-base-v2](#intfloate5-base-v2)
+- [BAAI/bge-base-en-v1.5](#baaibge-base-en-v15)
+- [Snowflake/snowflake-arctic-embed-m-v1.5](#snowflakesnowflake-arctic-embed-m-v15)
+- [opensearch-project/opensearch-neural-sparse-encoding-v1](#opensearch-projectopensearch-neural-sparse-encoding-v1)
+
 ### sentence-transformers/all-MiniLM-L6-v2
 
 [Docs](https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2)
@@ -66,6 +77,68 @@ docs = [
 
 model = Transformers::SentenceTransformer.new("mixedbread-ai/mxbai-embed-large-v1")
 embeddings = model.encode(docs)
+```
+
+### thenlper/gte-small
+
+[Docs](https://huggingface.co/thenlper/gte-small)
+
+```ruby
+sentences = ["That is a happy person", "That is a very happy person"]
+
+model = Transformers.pipeline("embedding", "thenlper/gte-small")
+embeddings = model.(sentences)
+```
+
+### intfloat/e5-base-v2
+
+[Docs](https://huggingface.co/intfloat/e5-base-v2)
+
+```ruby
+doc_prefix = "passage: "
+query_prefix = "query: "
+
+input = [
+  doc_prefix + "Ruby is a programming language created by Matz",
+  query_prefix + "Ruby creator"
+]
+
+model = Transformers.pipeline("embedding", "intfloat/e5-base-v2")
+embeddings = model.(input)
+```
+
+### BAAI/bge-base-en-v1.5
+
+[Docs](https://huggingface.co/BAAI/bge-base-en-v1.5)
+
+```ruby
+query_prefix = "Represent this sentence for searching relevant passages: "
+
+input = [
+  "The dog is barking",
+  "The cat is purring",
+  query_prefix + "puppy"
+]
+
+model = Transformers.pipeline("embedding", "BAAI/bge-base-en-v1.5")
+embeddings = model.(input)
+```
+
+### Snowflake/snowflake-arctic-embed-m-v1.5
+
+[Docs](https://huggingface.co/Snowflake/snowflake-arctic-embed-m-v1.5)
+
+```ruby
+query_prefix = "Represent this sentence for searching relevant passages: "
+
+input = [
+  "The dog is barking",
+  "The cat is purring",
+  query_prefix + "puppy"
+]
+
+model = Transformers.pipeline("embedding", "Snowflake/snowflake-arctic-embed-m-v1.5")
+embeddings = model.(input, pooling: "cls")
 ```
 
 ### opensearch-project/opensearch-neural-sparse-encoding-v1

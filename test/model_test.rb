@@ -50,6 +50,68 @@ class ModelTest < Minitest::Test
     assert_elements_in_delta [-0.61227727, 1.4060247, -0.04079155], embeddings[-1][..2]
   end
 
+  # https://huggingface.co/thenlper/gte-small
+  def test_gte_small
+    sentences = ["That is a happy person", "That is a very happy person"]
+
+    model = Transformers.pipeline("embedding", "thenlper/gte-small")
+    embeddings = model.(sentences)
+
+    assert_elements_in_delta [-0.05316979, 0.01044252, 0.06194701], embeddings[0][..2]
+    assert_elements_in_delta [-0.05246907, 0.03752426, 0.07344585], embeddings[-1][..2]
+  end
+
+  # https://huggingface.co/intfloat/e5-base-v2
+  def test_e5_base
+    doc_prefix = "passage: "
+    query_prefix = "query: "
+
+    input = [
+      doc_prefix + "Ruby is a programming language created by Matz",
+      query_prefix + "Ruby creator"
+    ]
+
+    model = Transformers.pipeline("embedding", "intfloat/e5-base-v2")
+    embeddings = model.(input)
+
+    assert_elements_in_delta [-0.00596662, -0.03730119, -0.0703470], embeddings[0][..2]
+    assert_elements_in_delta [0.00298353, -0.04421991, -0.0591884], embeddings[-1][..2]
+  end
+
+  # https://huggingface.co/BAAI/bge-base-en-v1.5
+  def test_bge_base
+    query_prefix = "Represent this sentence for searching relevant passages: "
+
+    input = [
+      "The dog is barking",
+      "The cat is purring",
+      query_prefix + "puppy"
+    ]
+
+    model = Transformers.pipeline("embedding", "BAAI/bge-base-en-v1.5")
+    embeddings = model.(input)
+
+    assert_elements_in_delta [-0.07482512, -0.0770234, 0.03398684], embeddings[1][..2]
+    assert_elements_in_delta [0.00029264, -0.0619305, -0.06199387], embeddings[-1][..2]
+  end
+
+  # https://huggingface.co/Snowflake/snowflake-arctic-embed-m-v1.5
+  def test_snowflake_arctic_embed
+    query_prefix = "Represent this sentence for searching relevant passages: "
+
+    input = [
+      "The dog is barking",
+      "The cat is purring",
+      query_prefix + "puppy"
+    ]
+
+    model = Transformers.pipeline("embedding", "Snowflake/snowflake-arctic-embed-m-v1.5")
+    embeddings = model.(input, pooling: "cls")
+
+    assert_elements_in_delta [0.03239886, 0.0009998, 0.08401278], embeddings[0][..2]
+    assert_elements_in_delta [-0.02530634, -0.02715422, 0.01218867], embeddings[-1][..2]
+  end
+
   # https://huggingface.co/opensearch-project/opensearch-neural-sparse-encoding-v1
   def test_opensearch
     docs = ["The dog is barking", "The cat is purring", "The bear is growling"]
