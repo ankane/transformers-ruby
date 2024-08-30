@@ -6,6 +6,8 @@ unless ENV["TRANSFORMERS_VERBOSITY"]
   Transformers.logger.level = Logger::ERROR
 end
 
+Transformers.fast_init = true
+
 class Minitest::Test
   def assert_elements_in_delta(expected, actual)
     assert_equal expected.size, actual.size

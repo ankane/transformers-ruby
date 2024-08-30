@@ -97,4 +97,9 @@ module Transformers
       "not implemented yet"
     end
   end
+
+  class << self
+    attr_accessor :fast_init
+  end
+  self.fast_init = false
 end

@@ -14,6 +14,47 @@
 # limitations under the License.
 
 module Transformers
+  module ModelingUtils
+    TORCH_INIT_FUNCTIONS = {
+      "uniform!" => Torch::NN::Init.method(:uniform!),
+      "normal!" => Torch::NN::Init.method(:normal!),
+      # "trunc_normal!" => Torch::NN::Init.method(:trunc_normal!),
+      "constant!" => Torch::NN::Init.method(:constant!),
+      "xavier_uniform!" => Torch::NN::Init.method(:xavier_uniform!),
+      "xavier_normal!" => Torch::NN::Init.method(:xavier_normal!),
+      "kaiming_uniform!" => Torch::NN::Init.method(:kaiming_uniform!),
+      "kaiming_normal!" => Torch::NN::Init.method(:kaiming_normal!),
+      # "uniform" => Torch::NN::Init.method(:uniform),
+      # "normal" => Torch::NN::Init.method(:normal),
+      # "xavier_uniform" => Torch::NN::Init.method(:xavier_uniform),
+      # "xavier_normal" => Torch::NN::Init.method(:xavier_normal),
+      # "kaiming_uniform" => Torch::NN::Init.method(:kaiming_uniform),
+      # "kaiming_normal" => Torch::NN::Init.method(:kaiming_normal)
+    }
+
+    # private
+    # note: this improves loading time significantly, but is not thread-safe!
+    def self.no_init_weights
+      return yield unless Transformers.fast_init
+
+      _skip_init = lambda do |*args, **kwargs|
+        # pass
+      end
+      # Save the original initialization functions
+      TORCH_INIT_FUNCTIONS.each do |name, init_func|
+        Torch::NN::Init.singleton_class.undef_method(name)
+        Torch::NN::Init.define_singleton_method(name, &_skip_init)
+      end
+      yield
+    ensure
+      # Restore the original initialization functions
+      TORCH_INIT_FUNCTIONS.each do |name, init_func|
+        Torch::NN::Init.singleton_class.undef_method(name)
+        Torch::NN::Init.define_singleton_method(name, init_func)
+      end
+    end
+  end
+
   module ModuleUtilsMixin
     def get_extended_attention_mask(
       attention_mask,
@@ -519,7 +560,7 @@ module Transformers
         config.name_or_path = pretrained_model_name_or_path
 
         # Instantiate model.
-        model = new(config, *model_args, **model_kwargs)
+        model = ModelingUtils.no_init_weights { new(config, *model_args, **model_kwargs) }
 
         # make sure we use the model's config since the __init__ call might have copied it
         config = model.config
