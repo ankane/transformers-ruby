@@ -512,7 +512,7 @@ module Transformers
 
         config.name_or_path = pretrained_model_name_or_path
 
-        model_kwargs = {}
+        # Instantiate model.
         model = new(config, *model_args, **model_kwargs)
 
         # make sure we use the model's config since the __init__ call might have copied it

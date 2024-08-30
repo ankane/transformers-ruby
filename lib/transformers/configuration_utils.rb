@@ -207,10 +207,17 @@ module Transformers
 
         config = new(**config_dict)
 
+        to_remove = []
         kwargs.each do |key, value|
           if config.respond_to?("#{key}=")
             config.public_send("#{key}=", value)
           end
+          if key != :torch_dtype
+            to_remove << key
+          end
+        end
+        to_remove.each do |key|
+          kwargs.delete(key)
         end
 
         Transformers.logger.info("Model config #{config}")
