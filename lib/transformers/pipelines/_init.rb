@@ -78,7 +78,17 @@ module Transformers
         }
       },
       "type" => "image"
-    }
+    },
+    "embedding" => {
+      "impl" => EmbeddingPipeline,
+      "pt" => [AutoModel],
+      "default" => {
+        "model" => {
+          "pt" => ["sentence-transformers/all-MiniLM-L6-v2", "8b3219a"]
+        }
+      },
+      "type" => "text"
+    },
   }
 
   PIPELINE_REGISTRY = PipelineRegistry.new(supported_tasks: SUPPORTED_TASKS, task_aliases: TASK_ALIASES)

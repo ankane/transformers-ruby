@@ -91,6 +91,13 @@ embeddings = values.to_a
 
 ## Pipelines
 
+Embedding [unreleased]
+
+```ruby
+embed = Transformers.pipeline("embedding")
+embed.("We are very happy to show you the 🤗 Transformers library.")
+```
+
 Named-entity recognition
 
 ```ruby

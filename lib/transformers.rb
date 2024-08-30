@@ -75,6 +75,7 @@ require_relative "transformers/models/vit/modeling_vit"
 # pipelines
 require_relative "transformers/pipelines/base"
 require_relative "transformers/pipelines/feature_extraction"
+require_relative "transformers/pipelines/embedding"
 require_relative "transformers/pipelines/image_classification"
 require_relative "transformers/pipelines/image_feature_extraction"
 require_relative "transformers/pipelines/pt_utils"

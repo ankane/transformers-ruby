@@ -62,6 +62,14 @@ class PipelineTest < Minitest::Test
     assert_in_delta 0.454, result[0][0][0]
   end
 
+  def test_embedding
+    sentences = ["This is an example sentence", "Each sentence is converted"]
+    embed = Transformers.pipeline("embedding")
+    embeddings = embed.(sentences)
+    assert_elements_in_delta [0.067657, 0.063496, 0.048713], embeddings[0][..2]
+    assert_elements_in_delta [0.086439, 0.10276, 0.0053946], embeddings[1][..2]
+  end
+
   def test_image_classification
     classifier = Transformers.pipeline("image-classification")
     result = classifier.("test/support/pipeline-cat-chonk.jpeg")
