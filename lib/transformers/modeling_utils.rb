@@ -758,7 +758,7 @@ module Transformers
 
         if unexpected_keys.length > 0
           archs = model.config.architectures.nil? ? [] : model.config.architectures
-          warner = archs.include?(model.class.name) ? Transformers.logger.method(:warn) : Transformers.logger.method(:info)
+          warner = archs.include?(model.class.name.split("::").last) ? Transformers.logger.method(:warn) : Transformers.logger.method(:info)
           warner.(
             "Some weights of the model checkpoint at #{pretrained_model_name_or_path} were not used when" +
             " initializing #{model.class.name}: #{unexpected_keys}\n- This IS expected if you are" +
