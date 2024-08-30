@@ -138,7 +138,11 @@ module Transformers
     end
 
     def _initialize_weights(mod)
+      if mod.instance_variable_defined?(:@is_hf_initialized)
+        return
+      end
       _init_weights(mod)
+      mod.instance_variable_set(:@is_hf_initialized, true)
     end
 
     def tie_weights
@@ -166,7 +170,9 @@ module Transformers
         prune_heads(@config.pruned_heads)
       end
 
-      if true
+      # TODO implement no_init_weights context manager
+      _init_weights = false
+      if _init_weights
         # Initialize weights
         apply(method(:_initialize_weights))
 
@@ -681,6 +687,10 @@ module Transformers
           if missing_in_group.length > 0 && missing_in_group.length < group.length
             missing_keys = missing_keys.select { |k| !missing_in_group.include?(k) }
           end
+        end
+
+        if _fast_init
+          # TODO
         end
 
         # Make sure we are able to load base models as well as derived models (with heads)
