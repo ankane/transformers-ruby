@@ -1,4 +1,4 @@
-## 0.1.1 (unreleased)
+## 0.1.1 (2024-08-29)
 
 - Added `embedding` pipeline
 - Added experimental `fast_init` option
