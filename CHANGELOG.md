@@ -1,3 +1,7 @@
+## 0.1.2 (unreleased)
+
+- Fixed default revision for pipelines
+
 ## 0.1.1 (2024-08-29)
 
 - Added `embedding` pipeline

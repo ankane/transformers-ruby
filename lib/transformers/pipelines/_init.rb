@@ -24,7 +24,7 @@ module Transformers
       "pt" => [AutoModel],
       "default" => {
         "model" => {
-          "pt" => ["distilbert/distilbert-base-cased", "935ac13"]
+          "pt" => ["distilbert/distilbert-base-cased", "6ea8117"]
         }
       },
       "type" => "multimodal"
@@ -34,7 +34,7 @@ module Transformers
       "pt" => [AutoModelForSequenceClassification],
       "default" => {
         "model" => {
-          "pt" => ["distilbert/distilbert-base-uncased-finetuned-sst-2-english", "af0f99b"]
+          "pt" => ["distilbert/distilbert-base-uncased-finetuned-sst-2-english", "714eb0f"]
         }
       },
       "type" => "text"
@@ -44,7 +44,7 @@ module Transformers
       "pt" => [AutoModelForTokenClassification],
       "default" => {
         "model" => {
-          "pt" => ["dbmdz/bert-large-cased-finetuned-conll03-english", "f2482bf"]
+          "pt" => ["dbmdz/bert-large-cased-finetuned-conll03-english", "4c53496"]
         }
       },
       "type" => "text"
@@ -54,7 +54,7 @@ module Transformers
       "pt" => [AutoModelForQuestionAnswering],
       "default" => {
         "model" => {
-          "pt" => ["distilbert/distilbert-base-cased-distilled-squad", "626af31"]
+          "pt" => ["distilbert/distilbert-base-cased-distilled-squad", "564e9b5"]
         }
       },
       "type" => "text"
@@ -64,7 +64,7 @@ module Transformers
       "pt" => [AutoModelForImageClassification],
       "default" => {
         "model" => {
-          "pt" => ["google/vit-base-patch16-224", "5dca96d"]
+          "pt" => ["google/vit-base-patch16-224", "3f49326"]
         }
       },
       "type" => "image"
@@ -227,6 +227,7 @@ module Transformers
           " #{revision} (#{Utils::Hub::HUGGINGFACE_CO_RESOLVE_ENDPOINT}/#{model}).\n" +
           "Using a pipeline without specifying a model name and revision in production is not recommended."
         )
+        hub_kwargs[:revision] = revision
         if config.nil? && model.is_a?(String)
           config = AutoConfig.from_pretrained(model, _from_pipeline: task, **hub_kwargs, **model_kwargs)
           hub_kwargs[:_commit_hash] = config._commit_hash
