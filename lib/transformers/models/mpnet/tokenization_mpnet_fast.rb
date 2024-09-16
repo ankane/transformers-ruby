@@ -16,7 +16,7 @@
 module Transformers
   module Mpnet
     class MPNetTokenizerFast < PreTrainedTokenizerFast
-      VOCAB_FILES_NAMES = {"vocab_file" => "vocab.txt", "tokenizer_file" => "tokenizer.json"}
+      VOCAB_FILES_NAMES = {vocab_file: "vocab.txt", tokenizer_file: "tokenizer.json"}
 
       self.vocab_files_names = VOCAB_FILES_NAMES
       # self.slow_tokenizer_class = MPNetTokenizer
