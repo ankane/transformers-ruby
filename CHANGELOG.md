@@ -1,5 +1,6 @@
 ## 0.1.3 (unreleased)
 
+- Added DeBERTa-v2
 - Added MPNet
 
 ## 0.1.2 (2024-09-10)

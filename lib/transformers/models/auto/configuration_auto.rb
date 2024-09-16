@@ -15,6 +15,7 @@
 module Transformers
   CONFIG_MAPPING_NAMES = {
     "bert" => "BertConfig",
+    "deberta-v2" => "DebertaV2Config",
     "distilbert" => "DistilBertConfig",
     "mpnet" => "MPNetConfig",
     "vit" => "ViTConfig",
@@ -31,7 +32,7 @@ module Transformers
       value = @mapping.fetch(key)
       module_name = model_type_to_module_name(key)
       if !@modules.include?(module_name)
-        @modules[module_name] = Transformers.const_get(module_name.capitalize)
+        @modules[module_name] = Transformers.const_get(module_name.split("-").map(&:capitalize).join)
       end
       @modules[module_name].const_get(value)
     end

@@ -116,7 +116,7 @@ module Transformers
     def _load_attr_from_module(model_type, attr)
       module_name = model_type_to_module_name(model_type)
       if !@modules.include?(module_name)
-        @modules[module_name] = Transformers.const_get(module_name.capitalize)
+        @modules[module_name] = Transformers.const_get(module_name.split("-").map(&:capitalize).join)
       end
       getattribute_from_module(@modules[module_name], attr)
     end

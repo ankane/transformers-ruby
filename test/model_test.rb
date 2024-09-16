@@ -144,4 +144,20 @@ class ModelTest < Minitest::Test
     assert_equal 77, embeddings[1].count { |v| v != 0 }
     assert_equal 102, embeddings[2].count { |v| v != 0 }
   end
+
+  # https://huggingface.co/mixedbread-ai/mxbai-rerank-base-v1
+  def test_mxbai_rerank
+    query = "How many people live in London?"
+    docs = ["Around 9 Million people live in London", "London is known for its financial district"]
+
+    model_id = "mixedbread-ai/mxbai-rerank-base-v1"
+    model = Transformers::AutoModelForSequenceClassification.from_pretrained(model_id)
+    tokenizer = Transformers::AutoTokenizer.from_pretrained(model_id)
+
+    inputs = tokenizer.([query] * docs.length, text_pair: docs, padding: true, truncation: true, return_tensors: "pt")
+    logits = model.(**inputs)
+    scores = logits[0].sigmoid.squeeze.to_a
+    assert_in_delta 0.984, scores[0]
+    assert_in_delta 0.139, scores[1]
+  end
 end

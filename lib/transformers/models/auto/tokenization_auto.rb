@@ -15,6 +15,7 @@
 module Transformers
   TOKENIZER_MAPPING_NAMES = {
     "bert" => ["BertTokenizer", "BertTokenizerFast"],
+    "deberta-v2" => ["DebertaV2TokenizerFast"],
     "distilbert" => ["DistilBertTokenizer", "DistilBertTokenizerFast"],
     "mpnet" => ["MPNetTokenizerFast"]
   }
@@ -99,7 +100,7 @@ module Transformers
 
         TOKENIZER_MAPPING_NAMES.each do |module_name, tokenizers|
           if tokenizers.include?(class_name)
-            cls = Transformers.const_get(module_name.capitalize).const_get(class_name)
+            cls = Transformers.const_get(module_name.split("-").map(&:capitalize).join).const_get(class_name)
             raise Error, "Invalid tokenizer class: #{class_name}" unless cls < PreTrainedTokenizer || cls < PreTrainedTokenizerFast
             return cls
           end

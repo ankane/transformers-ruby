@@ -207,7 +207,7 @@ module Transformers
 
     def init_weights
       # Prune heads if needed
-      if @config.pruned_heads
+      if @config.pruned_heads.any?
         prune_heads(@config.pruned_heads)
       end
 
@@ -803,11 +803,18 @@ module Transformers
           raise Todo
         end
 
+        model_class_name = model.class.name.split("::").last
+
         if error_msgs.length > 0
-          raise Todo
+          error_msg = error_msgs.join("\n\t")
+          if error_msg.include?("size mismatch")
+            error_msg += (
+              "\n\tYou may consider adding `ignore_mismatched_sizes: true` in the model `from_pretrained` method."
+            )
+          end
+          raise RuntimeError, "Error(s) in loading state_dict for #{model_class_name}:\n\t#{error_msg}"
         end
 
-        model_class_name = model.class.name.split("::").last
         if unexpected_keys.length > 0
           archs = model.config.architectures.nil? ? [] : model.config.architectures
           warner = archs.include?(model_class_name) ? Transformers.logger.method(:warn) : Transformers.logger.method(:info)

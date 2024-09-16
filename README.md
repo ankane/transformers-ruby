@@ -38,6 +38,10 @@ Sparse embedding
 
 - [opensearch-project/opensearch-neural-sparse-encoding-v1](#opensearch-projectopensearch-neural-sparse-encoding-v1)
 
+Reranking
+
+- [mixedbread-ai/mxbai-rerank-base-v1](#mixedbread-aimxbai-rerank-base-v1) [unreleased]
+
 ### sentence-transformers/all-MiniLM-L6-v2
 
 [Docs](https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2)
@@ -173,6 +177,23 @@ values, _ = Torch.max(output * feature[:attention_mask].unsqueeze(-1), dim: 1)
 values = Torch.log(1 + Torch.relu(values))
 values[0.., special_token_ids] = 0
 embeddings = values.to_a
+```
+
+### mixedbread-ai/mxbai-rerank-base-v1
+
+[Docs](https://huggingface.co/mixedbread-ai/mxbai-rerank-base-v1)
+
+```ruby
+query = "How many people live in London?"
+docs = ["Around 9 Million people live in London", "London is known for its financial district"]
+
+model_id = "mixedbread-ai/mxbai-rerank-base-v1"
+model = Transformers::AutoModelForSequenceClassification.from_pretrained(model_id)
+tokenizer = Transformers::AutoTokenizer.from_pretrained(model_id)
+
+inputs = tokenizer.([query] * docs.length, text_pair: docs, padding: true, truncation: true, return_tensors: "pt")
+logits = model.(**inputs)
+scores = logits[0].sigmoid.squeeze.to_a
 ```
 
 ## Pipelines

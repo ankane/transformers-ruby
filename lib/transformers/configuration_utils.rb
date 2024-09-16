@@ -91,10 +91,24 @@ module Transformers
       # Config hash
       @commit_hash = kwargs.delete(:_commit_hash)
 
-      # TODO set kwargs
-      @gradient_checkpointing = kwargs[:gradient_checkpointing]
-      @output_past = kwargs[:output_past]
-      @tie_weights_ = kwargs[:tie_weights_]
+      # Attention implementation to use, if relevant.
+      @attn_implementation_internal = kwargs.delete(:attn_implementation)
+
+      # Drop the transformers version info
+      @transformers_version = kwargs.delete(:transformers_version)
+
+      # Deal with gradient checkpointing
+      # if kwargs[:gradient_checkpointing] == false
+      #   warn(
+      #     "Passing `gradient_checkpointing` to a config initialization is deprecated and will be removed in v5 " +
+      #     "Transformers. Using `model.gradient_checkpointing_enable()` instead, or if you are using the " +
+      #     "`Trainer` API, pass `gradient_checkpointing: true` in your `TrainingArguments`."
+      #   )
+      # end
+
+      kwargs.each do |k, v|
+        instance_variable_set("@#{k}", v)
+      end
     end
 
     def name_or_path
@@ -180,6 +194,16 @@ module Transformers
         config_dict = to_dict
       end
       JSON.pretty_generate(config_dict.sort_by { |k, _| k }.to_h) + "\n"
+    end
+
+    def getattr(key, default)
+      if respond_to?(key)
+        public_send(key)
+      elsif instance_variable_defined?("@#{key}")
+        instance_variable_get("@#{key}")
+      else
+        default
+      end
     end
 
     class << self

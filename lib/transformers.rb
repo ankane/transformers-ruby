@@ -61,6 +61,11 @@ require_relative "transformers/models/bert/modeling_bert"
 require_relative "transformers/models/bert/tokenization_bert"
 require_relative "transformers/models/bert/tokenization_bert_fast"
 
+# models deberta-v2
+require_relative "transformers/models/deberta_v2/configuration_deberta_v2"
+require_relative "transformers/models/deberta_v2/modeling_deberta_v2"
+require_relative "transformers/models/deberta_v2/tokenization_deberta_v2_fast"
+
 # models distilbert
 require_relative "transformers/models/distilbert/configuration_distilbert"
 require_relative "transformers/models/distilbert/modeling_distilbert"

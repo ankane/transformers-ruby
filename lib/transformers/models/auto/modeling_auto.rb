@@ -15,6 +15,7 @@
 module Transformers
   MODEL_MAPPING_NAMES = {
     "bert" => "BertModel",
+    "deberta-v2" => "DebertaV2Model",
     "distilbert" => "DistilBertModel",
     "mpnet" => "MPNetModel",
     "vit" => "ViTModel"
@@ -26,6 +27,7 @@ module Transformers
   }
 
   MODEL_FOR_SEQUENCE_CLASSIFICATION_MAPPING_NAMES = {
+    "deberta-v2" => "DebertaV2ForSequenceClassification",
     "distilbert" => "DistilBertForSequenceClassification"
   }
 
