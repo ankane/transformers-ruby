@@ -16,7 +16,8 @@ module Transformers
   CONFIG_MAPPING_NAMES = {
     "bert" => "BertConfig",
     "distilbert" => "DistilBertConfig",
-    "vit" => "ViTConfig"
+    "mpnet" => "MPNetConfig",
+    "vit" => "ViTConfig",
   }
 
   class LazyConfigMapping

@@ -67,6 +67,11 @@ require_relative "transformers/models/distilbert/modeling_distilbert"
 require_relative "transformers/models/distilbert/tokenization_distilbert"
 require_relative "transformers/models/distilbert/tokenization_distilbert_fast"
 
+# models mpnet
+require_relative "transformers/models/mpnet/configuration_mpnet"
+require_relative "transformers/models/mpnet/modeling_mpnet"
+require_relative "transformers/models/mpnet/tokenization_mpnet_fast"
+
 # models vit
 require_relative "transformers/models/vit/configuration_vit"
 require_relative "transformers/models/vit/image_processing_vit"

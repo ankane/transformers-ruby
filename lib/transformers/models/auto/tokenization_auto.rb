@@ -15,7 +15,8 @@
 module Transformers
   TOKENIZER_MAPPING_NAMES = {
     "bert" => ["BertTokenizer", "BertTokenizerFast"],
-    "distilbert" => ["DistilBertTokenizer", "DistilBertTokenizerFast"]
+    "distilbert" => ["DistilBertTokenizer", "DistilBertTokenizerFast"],
+    "mpnet" => ["MPNetTokenizerFast"]
   }
 
   TOKENIZER_MAPPING = LazyAutoMapping.new(CONFIG_MAPPING_NAMES, TOKENIZER_MAPPING_NAMES)

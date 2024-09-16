@@ -32,6 +32,7 @@ Embedding
 - [intfloat/e5-base-v2](#intfloate5-base-v2)
 - [BAAI/bge-base-en-v1.5](#baaibge-base-en-v15)
 - [Snowflake/snowflake-arctic-embed-m-v1.5](#snowflakesnowflake-arctic-embed-m-v15)
+- [sentence-transformers/all-mpnet-base-v2](#sentence-transformersall-mpnet-base-v2) [unreleased]
 
 Sparse embedding
 
@@ -140,6 +141,17 @@ input = [
 
 model = Transformers.pipeline("embedding", "Snowflake/snowflake-arctic-embed-m-v1.5")
 embeddings = model.(input, pooling: "cls")
+```
+
+### sentence-transformers/all-mpnet-base-v2
+
+[Docs](https://huggingface.co/sentence-transformers/all-mpnet-base-v2)
+
+```ruby
+sentences = ["This is an example sentence", "Each sentence is converted"]
+
+model = Transformers.pipeline("embedding", "sentence-transformers/all-mpnet-base-v2")
+embeddings = model.(sentences)
 ```
 
 ### opensearch-project/opensearch-neural-sparse-encoding-v1

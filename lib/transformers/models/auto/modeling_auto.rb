@@ -16,11 +16,13 @@ module Transformers
   MODEL_MAPPING_NAMES = {
     "bert" => "BertModel",
     "distilbert" => "DistilBertModel",
+    "mpnet" => "MPNetModel",
     "vit" => "ViTModel"
   }
 
   MODEL_FOR_MASKED_LM_MAPPING_NAMES = {
-    "bert" => "BertForMaskedLM"
+    "bert" => "BertForMaskedLM",
+    "mpnet" => "MPNetForMaskedLM"
   }
 
   MODEL_FOR_SEQUENCE_CLASSIFICATION_MAPPING_NAMES = {

@@ -1,3 +1,7 @@
+## 0.1.3 (unreleased)
+
+- Added MPNet
+
 ## 0.1.2 (2024-09-10)
 
 - Fixed default revision for pipelines

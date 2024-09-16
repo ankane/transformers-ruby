@@ -112,6 +112,17 @@ class ModelTest < Minitest::Test
     assert_elements_in_delta [-0.02530634, -0.02715422, 0.01218867], embeddings[-1][..2]
   end
 
+  # https://huggingface.co/sentence-transformers/all-mpnet-base-v2
+  def test_all_mpnet
+    sentences = ["This is an example sentence", "Each sentence is converted"]
+
+    model = Transformers.pipeline("embedding", "sentence-transformers/all-mpnet-base-v2")
+    embeddings = model.(sentences)
+
+    assert_elements_in_delta [0.02250263, -0.07829167, -0.02303071], embeddings[0][..2]
+    assert_elements_in_delta [0.04170236, 0.00109747, -0.01553415], embeddings[1][..2]
+  end
+
   # https://huggingface.co/opensearch-project/opensearch-neural-sparse-encoding-v1
   def test_opensearch
     docs = ["The dog is barking", "The cat is purring", "The bear is growling"]
