@@ -264,7 +264,7 @@ extractor.(URI("https://huggingface.co/datasets/huggingface/documentation-images
 
 ## API
 
-This library follows the [Transformers Python API](https://huggingface.co/docs/transformers/index). Only a few model architectures are currently supported:
+This library follows the [Transformers Python API](https://huggingface.co/docs/transformers/index). The following model architectures are currently supported:
 
 - BERT
 - DeBERTa-v2 [unreleased]
