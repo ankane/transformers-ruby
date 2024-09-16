@@ -188,13 +188,8 @@ embeddings = values.to_a
 query = "How many people live in London?"
 docs = ["Around 9 Million people live in London", "London is known for its financial district"]
 
-model_id = "mixedbread-ai/mxbai-rerank-base-v1"
-model = Transformers::AutoModelForSequenceClassification.from_pretrained(model_id)
-tokenizer = Transformers::AutoTokenizer.from_pretrained(model_id)
-
-inputs = tokenizer.([query] * docs.length, text_pair: docs, padding: true, truncation: true, return_tensors: "pt")
-logits = model.(**inputs)
-scores = logits[0].sigmoid.squeeze.to_a
+model = Transformers.pipeline("reranking", "mixedbread-ai/mxbai-rerank-base-v1")
+result = model.(query, docs)
 ```
 
 ### BAAI/bge-reranker-base
@@ -205,13 +200,8 @@ scores = logits[0].sigmoid.squeeze.to_a
 query = "How many people live in London?"
 docs = ["Around 9 Million people live in London", "London is known for its financial district"]
 
-model_id = "BAAI/bge-reranker-base"
-model = Transformers::AutoModelForSequenceClassification.from_pretrained(model_id)
-tokenizer = Transformers::AutoTokenizer.from_pretrained(model_id)
-
-inputs = tokenizer.([query] * docs.length, text_pair: docs, padding: true, truncation: true, return_tensors: "pt")
-logits = model.(**inputs)
-scores = logits[0].sigmoid.squeeze.to_a
+model = Transformers.pipeline("reranking", "BAAI/bge-reranker-base")
+result = model.(query, docs)
 ```
 
 ## Pipelines
@@ -221,6 +211,13 @@ Embedding
 ```ruby
 embed = Transformers.pipeline("embedding")
 embed.("We are very happy to show you the 🤗 Transformers library.")
+```
+
+Reranking [unreleased]
+
+```ruby
+rerank = Informers.pipeline("reranking")
+rerank.("Who created Ruby?", ["Matz created Ruby", "Another doc"])
 ```
 
 Named-entity recognition

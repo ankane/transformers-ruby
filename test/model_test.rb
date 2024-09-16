@@ -150,16 +150,14 @@ class ModelTest < Minitest::Test
     query = "How many people live in London?"
     docs = ["Around 9 Million people live in London", "London is known for its financial district"]
 
-    model_id = "mixedbread-ai/mxbai-rerank-base-v1"
-    model = Transformers::AutoModelForSequenceClassification.from_pretrained(model_id)
-    tokenizer = Transformers::AutoTokenizer.from_pretrained(model_id)
+    model = Transformers.pipeline("reranking", "mixedbread-ai/mxbai-rerank-base-v1")
+    result = model.(query, docs)
 
-    inputs = tokenizer.([query] * docs.length, text_pair: docs, padding: true, truncation: true, return_tensors: "pt")
-    logits = model.(**inputs)
-    scores = logits[0].sigmoid.squeeze.to_a
+    assert_equal 0, result[0][:index]
+    assert_in_delta 0.984, result[0][:score]
 
-    assert_in_delta 0.984, scores[0]
-    assert_in_delta 0.139, scores[1]
+    assert_equal 1, result[1][:index]
+    assert_in_delta 0.139, result[1][:score]
   end
 
   # https://huggingface.co/BAAI/bge-reranker-base
@@ -167,15 +165,13 @@ class ModelTest < Minitest::Test
     query = "How many people live in London?"
     docs = ["Around 9 Million people live in London", "London is known for its financial district"]
 
-    model_id = "BAAI/bge-reranker-base"
-    model = Transformers::AutoModelForSequenceClassification.from_pretrained(model_id)
-    tokenizer = Transformers::AutoTokenizer.from_pretrained(model_id)
+    model = Transformers.pipeline("reranking", "BAAI/bge-reranker-base")
+    result = model.(query, docs)
 
-    inputs = tokenizer.([query] * docs.length, text_pair: docs, padding: true, truncation: true, return_tensors: "pt")
-    logits = model.(**inputs)
-    scores = logits[0].sigmoid.squeeze.to_a
+    assert_equal 0, result[0][:index]
+    assert_in_delta 0.996, result[0][:score]
 
-    assert_in_delta 0.996, scores[0]
-    assert_in_delta 0.000158, scores[1], 0.000001
+    assert_equal 1, result[1][:index]
+    assert_in_delta 0.000158, result[1][:score], 0.000001
   end
 end

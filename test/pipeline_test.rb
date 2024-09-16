@@ -70,6 +70,18 @@ class PipelineTest < Minitest::Test
     assert_elements_in_delta [0.086439, 0.10276, 0.0053946], embeddings[1][..2]
   end
 
+  def test_reranking
+    query = "How many people live in London?"
+    docs = ["Around 9 Million people live in London", "London is known for its financial district"]
+    rerank = Transformers.pipeline("reranking")
+    result = rerank.(query, docs)
+    assert_equal 2, result.size
+    assert_equal 0, result[0][:index]
+    assert_in_delta 0.984, result[0][:score]
+    assert_equal 1, result[1][:index]
+    assert_in_delta 0.139, result[1][:score]
+  end
+
   def test_image_classification
     classifier = Transformers.pipeline("image-classification")
     result = classifier.("test/support/pipeline-cat-chonk.jpeg")

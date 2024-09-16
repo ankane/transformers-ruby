@@ -1,5 +1,6 @@
 ## 0.1.3 (unreleased)
 
+- Added `reranking` pipeline
 - Added DeBERTa-v2
 - Added MPNet
 - Added XLM-RoBERTa

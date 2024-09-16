@@ -89,6 +89,16 @@ module Transformers
       },
       "type" => "text"
     },
+    "reranking" => {
+      "impl" => RerankingPipeline,
+      "pt" => [AutoModelForSequenceClassification],
+      "default" => {
+        "model" => {
+          "pt" => ["mixedbread-ai/mxbai-rerank-base-v1", "03241da"]
+        }
+      },
+      "type" => "text"
+    }
   }
 
   PIPELINE_REGISTRY = PipelineRegistry.new(supported_tasks: SUPPORTED_TASKS, task_aliases: TASK_ALIASES)
