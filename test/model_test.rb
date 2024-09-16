@@ -157,7 +157,25 @@ class ModelTest < Minitest::Test
     inputs = tokenizer.([query] * docs.length, text_pair: docs, padding: true, truncation: true, return_tensors: "pt")
     logits = model.(**inputs)
     scores = logits[0].sigmoid.squeeze.to_a
+
     assert_in_delta 0.984, scores[0]
     assert_in_delta 0.139, scores[1]
+  end
+
+  # https://huggingface.co/BAAI/bge-reranker-base
+  def test_bge_reranker
+    query = "How many people live in London?"
+    docs = ["Around 9 Million people live in London", "London is known for its financial district"]
+
+    model_id = "BAAI/bge-reranker-base"
+    model = Transformers::AutoModelForSequenceClassification.from_pretrained(model_id)
+    tokenizer = Transformers::AutoTokenizer.from_pretrained(model_id)
+
+    inputs = tokenizer.([query] * docs.length, text_pair: docs, padding: true, truncation: true, return_tensors: "pt")
+    logits = model.(**inputs)
+    scores = logits[0].sigmoid.squeeze.to_a
+
+    assert_in_delta 0.996, scores[0]
+    assert_in_delta 0.000158, scores[1], 0.000001
   end
 end

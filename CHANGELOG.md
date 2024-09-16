@@ -2,6 +2,7 @@
 
 - Added DeBERTa-v2
 - Added MPNet
+- Added XLM-RoBERTa
 
 ## 0.1.2 (2024-09-10)
 

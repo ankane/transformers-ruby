@@ -82,6 +82,11 @@ require_relative "transformers/models/vit/configuration_vit"
 require_relative "transformers/models/vit/image_processing_vit"
 require_relative "transformers/models/vit/modeling_vit"
 
+# models xml-roberta
+require_relative "transformers/models/xlm_roberta/configuration_xlm_roberta"
+require_relative "transformers/models/xlm_roberta/modeling_xlm_roberta"
+require_relative "transformers/models/xlm_roberta/tokenization_xlm_roberta_fast"
+
 # pipelines
 require_relative "transformers/pipelines/base"
 require_relative "transformers/pipelines/feature_extraction"

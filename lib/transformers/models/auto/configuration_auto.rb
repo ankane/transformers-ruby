@@ -19,6 +19,7 @@ module Transformers
     "distilbert" => "DistilBertConfig",
     "mpnet" => "MPNetConfig",
     "vit" => "ViTConfig",
+    "xlm-roberta" => "XLMRobertaConfig"
   }
 
   class LazyConfigMapping

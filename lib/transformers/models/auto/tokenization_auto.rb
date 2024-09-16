@@ -17,7 +17,8 @@ module Transformers
     "bert" => ["BertTokenizer", "BertTokenizerFast"],
     "deberta-v2" => ["DebertaV2TokenizerFast"],
     "distilbert" => ["DistilBertTokenizer", "DistilBertTokenizerFast"],
-    "mpnet" => ["MPNetTokenizerFast"]
+    "mpnet" => ["MPNetTokenizerFast"],
+    "xlm-roberta" => ["XLMRobertaTokenizerFast"]
   }
 
   TOKENIZER_MAPPING = LazyAutoMapping.new(CONFIG_MAPPING_NAMES, TOKENIZER_MAPPING_NAMES)

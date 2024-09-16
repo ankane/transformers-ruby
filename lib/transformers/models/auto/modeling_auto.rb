@@ -18,7 +18,8 @@ module Transformers
     "deberta-v2" => "DebertaV2Model",
     "distilbert" => "DistilBertModel",
     "mpnet" => "MPNetModel",
-    "vit" => "ViTModel"
+    "vit" => "ViTModel",
+    "xlm-roberta" => "XLMRobertaModel"
   }
 
   MODEL_FOR_MASKED_LM_MAPPING_NAMES = {
@@ -28,7 +29,8 @@ module Transformers
 
   MODEL_FOR_SEQUENCE_CLASSIFICATION_MAPPING_NAMES = {
     "deberta-v2" => "DebertaV2ForSequenceClassification",
-    "distilbert" => "DistilBertForSequenceClassification"
+    "distilbert" => "DistilBertForSequenceClassification",
+    "xlm-roberta" => "XLMRobertaForSequenceClassification"
   }
 
   MODEL_FOR_QUESTION_ANSWERING_MAPPING_NAMES = {

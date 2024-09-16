@@ -41,6 +41,7 @@ Sparse embedding
 Reranking
 
 - [mixedbread-ai/mxbai-rerank-base-v1](#mixedbread-aimxbai-rerank-base-v1) [unreleased]
+- [BAAI/bge-reranker-base](#baaibge-reranker-base) [unreleased]
 
 ### sentence-transformers/all-MiniLM-L6-v2
 
@@ -188,6 +189,23 @@ query = "How many people live in London?"
 docs = ["Around 9 Million people live in London", "London is known for its financial district"]
 
 model_id = "mixedbread-ai/mxbai-rerank-base-v1"
+model = Transformers::AutoModelForSequenceClassification.from_pretrained(model_id)
+tokenizer = Transformers::AutoTokenizer.from_pretrained(model_id)
+
+inputs = tokenizer.([query] * docs.length, text_pair: docs, padding: true, truncation: true, return_tensors: "pt")
+logits = model.(**inputs)
+scores = logits[0].sigmoid.squeeze.to_a
+```
+
+### BAAI/bge-reranker-base
+
+[Docs](https://huggingface.co/BAAI/bge-reranker-base)
+
+```ruby
+query = "How many people live in London?"
+docs = ["Around 9 Million people live in London", "London is known for its financial district"]
+
+model_id = "BAAI/bge-reranker-base"
 model = Transformers::AutoModelForSequenceClassification.from_pretrained(model_id)
 tokenizer = Transformers::AutoTokenizer.from_pretrained(model_id)
 

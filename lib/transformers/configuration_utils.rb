@@ -206,6 +206,10 @@ module Transformers
       end
     end
 
+    def hasattr(key)
+      respond_to?(key) || instance_variable_defined?("@#{key}")
+    end
+
     class << self
       def from_pretrained(
         pretrained_model_name_or_path,
