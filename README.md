@@ -206,6 +206,11 @@ result = model.(query, docs)
 
 ## Pipelines
 
+- [Text](#text)
+- [Vision](#vision)
+
+### Text
+
 Embedding
 
 ```ruby
@@ -248,18 +253,20 @@ extractor = Transformers.pipeline("feature-extraction")
 extractor.("We are very happy to show you the 🤗 Transformers library.")
 ```
 
+### Vision
+
 Image classification
 
 ```ruby
 classifier = Transformers.pipeline("image-classification")
-classifier.(URI("https://huggingface.co/datasets/huggingface/documentation-images/resolve/main/pipeline-cat-chonk.jpeg"))
+classifier.("image.jpg")
 ```
 
 Image feature extraction
 
 ```ruby
 extractor = Transformers.pipeline("image-feature-extraction")
-extractor.(URI("https://huggingface.co/datasets/huggingface/documentation-images/resolve/main/pipeline-cat-chonk.jpeg"))
+extractor.("image.jpg")
 ```
 
 ## API
