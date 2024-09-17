@@ -1,4 +1,4 @@
-## 0.1.3 (unreleased)
+## 0.1.3 (2024-09-17)
 
 - Added `reranking` pipeline
 - Added DeBERTa-v2

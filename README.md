@@ -32,7 +32,7 @@ Embedding
 - [intfloat/e5-base-v2](#intfloate5-base-v2)
 - [BAAI/bge-base-en-v1.5](#baaibge-base-en-v15)
 - [Snowflake/snowflake-arctic-embed-m-v1.5](#snowflakesnowflake-arctic-embed-m-v15)
-- [sentence-transformers/all-mpnet-base-v2](#sentence-transformersall-mpnet-base-v2) [unreleased]
+- [sentence-transformers/all-mpnet-base-v2](#sentence-transformersall-mpnet-base-v2)
 
 Sparse embedding
 
@@ -40,8 +40,8 @@ Sparse embedding
 
 Reranking
 
-- [mixedbread-ai/mxbai-rerank-base-v1](#mixedbread-aimxbai-rerank-base-v1) [unreleased]
-- [BAAI/bge-reranker-base](#baaibge-reranker-base) [unreleased]
+- [mixedbread-ai/mxbai-rerank-base-v1](#mixedbread-aimxbai-rerank-base-v1)
+- [BAAI/bge-reranker-base](#baaibge-reranker-base)
 
 ### sentence-transformers/all-MiniLM-L6-v2
 
@@ -218,7 +218,7 @@ embed = Transformers.pipeline("embedding")
 embed.("We are very happy to show you the 🤗 Transformers library.")
 ```
 
-Reranking [unreleased]
+Reranking
 
 ```ruby
 rerank = Informers.pipeline("reranking")
@@ -274,11 +274,11 @@ extractor.("image.jpg")
 This library follows the [Transformers Python API](https://huggingface.co/docs/transformers/index). The following model architectures are currently supported:
 
 - BERT
-- DeBERTa-v2 [unreleased]
+- DeBERTa-v2
 - DistilBERT
-- MPNet [unreleased]
+- MPNet
 - ViT
-- XLM-RoBERTa [unreleased]
+- XLM-RoBERTa
 
 ## History
 
