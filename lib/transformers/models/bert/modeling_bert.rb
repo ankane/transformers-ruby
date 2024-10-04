@@ -833,8 +833,8 @@ module Transformers
     class BertForSequenceClassification < BertPreTrainedModel
       def initialize(config)
         super
-
         @num_labels = config.num_labels
+        @config = config
 
         @bert = BertModel.new(config, add_pooling_layer: true)
         classifier_dropout = (
@@ -861,7 +861,7 @@ module Transformers
       )
         return_dict = @config.use_return_dict if return_dict.nil?
 
-        outputs = @bert.call(
+        outputs = @bert.(
           input_ids: input_ids,
           attention_mask: attention_mask,
           token_type_ids: token_type_ids,
@@ -873,25 +873,41 @@ module Transformers
           return_dict: return_dict
         )
 
-        pooled_output = outputs.pooler_output
-        pooled_output = @dropout.call(pooled_output)
-        logits = @classifier.call(pooled_output)
+        pooled_output = outputs[1]
+
+        pooled_output = @dropout.(pooled_output)
+        logits = @classifier.(pooled_output)
 
         loss = nil
         if !labels.nil?
-          if @num_labels == 1
-            # Regression task
+          if @config.problem_type.nil?
+            if @num_labels == 1
+              @config.problem_type = "regression"
+            elsif @num_labels > 1 && (labels.dtype == Torch.long || labels.dtype == Torch.int)
+              @config.problem_type = "single_label_classification"
+            else
+              @config.problem_type = "multi_label_classification"
+            end
+          end
+
+          if @config.problem_type == "regression"
             loss_fct = Torch::NN::MSELoss.new
-            loss = loss_fct.call(logits.squeeze, labels.squeeze)
-          else
-            # Classification task
+            if @num_labels == 1
+              loss = loss_fct.(logits.squeeze, labels.squeeze)
+            else
+              loss = loss_fct.(logits, labels)
+            end
+          elsif @config.problem_type == "single_label_classification"
             loss_fct = Torch::NN::CrossEntropyLoss.new
-            loss = loss_fct.call(logits, labels)
+            loss = loss_fct.(logits.view(-1, @num_labels), labels.view(-1))
+          elsif @config.problem_type == "multi_label_classification"
+            loss_fct = Torch::NN::BCEWithLogitsLoss.new
+            loss = loss_fct.(logits, labels)
           end
         end
 
         if !return_dict
-          raise NotImplementedError, "Non-dict outputs are not implemented yet."
+          raise Todo
         end
 
         SequenceClassifierOutput.new(

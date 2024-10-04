@@ -36,7 +36,9 @@ module Transformers
 
     attr_reader :output_hidden_states, :output_attentions, :pruned_heads, :tie_word_embeddings, :tokenizer_class,
       :chunk_size_feed_forward, :pad_token_id, :is_decoder, :add_cross_attention,
-      :problem_type, :id2label, :architectures, :is_encoder_decoder, :tie_encoder_decoder, :_commit_hash
+      :id2label, :architectures, :is_encoder_decoder, :tie_encoder_decoder, :_commit_hash
+
+    attr_accessor :problem_type
 
     def initialize(**kwargs)
       @return_dict = kwargs.delete(:return_dict) { true }
