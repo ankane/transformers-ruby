@@ -829,8 +829,82 @@ module Transformers
         )
       end
     end
+
+    class BertForSequenceClassification < BertPreTrainedModel
+      def initialize(config)
+        super
+
+        @num_labels = config.num_labels
+
+        @bert = BertModel.new(config, add_pooling_layer: true)
+        classifier_dropout = (
+          config.classifier_dropout.nil? ? config.hidden_dropout_prob : config.classifier_dropout
+        )
+        @dropout = Torch::NN::Dropout.new(p: classifier_dropout)
+        @classifier = Torch::NN::Linear.new(config.hidden_size, config.num_labels)
+
+        # Initialize weights and apply final processing
+        post_init
+      end
+
+      def forward(
+        input_ids: nil,
+        attention_mask: nil,
+        token_type_ids: nil,
+        position_ids: nil,
+        head_mask: nil,
+        inputs_embeds: nil,
+        labels: nil,
+        output_attentions: nil,
+        output_hidden_states: nil,
+        return_dict: nil
+      )
+        return_dict = @config.use_return_dict if return_dict.nil?
+
+        outputs = @bert.call(
+          input_ids: input_ids,
+          attention_mask: attention_mask,
+          token_type_ids: token_type_ids,
+          position_ids: position_ids,
+          head_mask: head_mask,
+          inputs_embeds: inputs_embeds,
+          output_attentions: output_attentions,
+          output_hidden_states: output_hidden_states,
+          return_dict: return_dict
+        )
+
+        pooled_output = outputs.pooler_output
+        pooled_output = @dropout.call(pooled_output)
+        logits = @classifier.call(pooled_output)
+
+        loss = nil
+        if !labels.nil?
+          if @num_labels == 1
+            # Regression task
+            loss_fct = Torch::NN::MSELoss.new
+            loss = loss_fct.call(logits.squeeze, labels.squeeze)
+          else
+            # Classification task
+            loss_fct = Torch::NN::CrossEntropyLoss.new
+            loss = loss_fct.call(logits, labels)
+          end
+        end
+
+        if !return_dict
+          raise NotImplementedError, "Non-dict outputs are not implemented yet."
+        end
+
+        SequenceClassifierOutput.new(
+          loss: loss,
+          logits: logits,
+          hidden_states: outputs.hidden_states,
+          attentions: outputs.attentions
+        )
+      end
+    end
   end
 
   BertModel = Bert::BertModel
   BertForTokenClassification = Bert::BertForTokenClassification
+  BertForSequenceClassification = Bert::BertForSequenceClassification
 end

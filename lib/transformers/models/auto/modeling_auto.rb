@@ -28,6 +28,7 @@ module Transformers
   }
 
   MODEL_FOR_SEQUENCE_CLASSIFICATION_MAPPING_NAMES = {
+    "bert" => "BertForSequenceClassification",
     "deberta-v2" => "DebertaV2ForSequenceClassification",
     "distilbert" => "DistilBertForSequenceClassification",
     "xlm-roberta" => "XLMRobertaForSequenceClassification"
