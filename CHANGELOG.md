@@ -1,3 +1,7 @@
+## 0.1.4 (unreleased)
+
+- Added `BertForSequenceClassification`
+
 ## 0.1.3 (2024-09-17)
 
 - Added `reranking` pipeline
