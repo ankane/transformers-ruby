@@ -15,7 +15,6 @@
 module Transformers
   class PreTrainedTokenizer < PreTrainedTokenizerBase
     def initialize(**kwargs)
-
       # 2. init `_added_tokens_decoder` if child class did not
       if !instance_variable_defined?(:@added_tokens_decoder)
         @added_tokens_decoder = {}

@@ -353,7 +353,7 @@ module Transformers
       def feed_forward_chunk(attention_output)
         intermediate_output = @intermediate.(attention_output)
         layer_output = @output.(intermediate_output, attention_output)
-        return layer_output
+        layer_output
       end
     end
 
@@ -370,7 +370,7 @@ module Transformers
         attention_mask: nil,
         head_mask: nil,
         encoder_hidden_states: nil,
-        encoder_attention_mask:nil,
+        encoder_attention_mask: nil,
         past_key_values: nil,
         use_cache: nil,
         output_attentions: false,
@@ -814,7 +814,7 @@ module Transformers
         loss = nil
         if !labels.nil?
           loss_fct = CrossEntropyLoss.new
-          loss = loss_fct.(logits.view(-1,@num_labels), labels.view(-1))
+          loss = loss_fct.(logits.view(-1, @num_labels), labels.view(-1))
         end
 
         if !return_dict

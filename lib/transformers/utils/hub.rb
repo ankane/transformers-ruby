@@ -181,9 +181,9 @@ module Transformers
               proxies: proxies,
               timeout: 10
             )
-            return true
+            true
           rescue HfHub::OfflineModeIsEnabled
-            return has_file_in_cache
+            has_file_in_cache
           rescue HfHub::GatedRepoError => e
             Transformers.logger.error(e)
             raise EnvironmentError,
@@ -200,7 +200,7 @@ module Transformers
               "#{revision} is not a valid git identifier (branch name, tag name or commit id) that exists for this " +
               "model name. Check the model page at 'https://huggingface.co/#{path_or_repo}' for available revisions."
           rescue HfHub::EntryNotFoundError
-            return false  # File does not exist
+            false  # File does not exist
           end
         end
       end

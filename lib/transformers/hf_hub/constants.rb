@@ -45,7 +45,7 @@ module Transformers
 
     REPO_TYPES_URL_PREFIXES = {
       REPO_TYPE_DATASET => "datasets/",
-      REPO_TYPE_SPACE => "spaces/",
+      REPO_TYPE_SPACE => "spaces/"
     }
 
     # default cache

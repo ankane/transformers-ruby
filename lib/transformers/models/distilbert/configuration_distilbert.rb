@@ -19,7 +19,7 @@ module Transformers
       self.attribute_map = {
         hidden_size: "dim",
         num_attention_heads: "n_heads",
-        num_hidden_layers: "n_layers",
+        num_hidden_layers: "n_layers"
       }
 
      attr_reader :vocab_size, :max_position_embeddings, :sinusoidal_pos_embds, :n_layers, :n_heads,

@@ -55,7 +55,7 @@ module Transformers
       config_dict, unused_kwargs = PretrainedConfig.get_config_dict(pretrained_model_name_or_path, **kwargs)
       if config_dict[:model_type]
         config_class = CONFIG_MAPPING[config_dict[:model_type]]
-        return config_class.from_dict(config_dict, **unused_kwargs)
+        config_class.from_dict(config_dict, **unused_kwargs)
       else
         raise Todo
       end

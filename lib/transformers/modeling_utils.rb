@@ -23,7 +23,7 @@ module Transformers
       "xavier_uniform!" => Torch::NN::Init.method(:xavier_uniform!),
       "xavier_normal!" => Torch::NN::Init.method(:xavier_normal!),
       "kaiming_uniform!" => Torch::NN::Init.method(:kaiming_uniform!),
-      "kaiming_normal!" => Torch::NN::Init.method(:kaiming_normal!),
+      "kaiming_normal!" => Torch::NN::Init.method(:kaiming_normal!)
       # "uniform" => Torch::NN::Init.method(:uniform),
       # "normal" => Torch::NN::Init.method(:normal),
       # "xavier_uniform" => Torch::NN::Init.method(:xavier_uniform),
