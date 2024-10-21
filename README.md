@@ -27,13 +27,13 @@ Embedding
 
 - [sentence-transformers/all-MiniLM-L6-v2](#sentence-transformersall-MiniLM-L6-v2)
 - [sentence-transformers/multi-qa-MiniLM-L6-cos-v1](#sentence-transformersmulti-qa-MiniLM-L6-cos-v1)
+- [sentence-transformers/all-mpnet-base-v2](#sentence-transformersall-mpnet-base-v2)
 - [sentence-transformers/paraphrase-MiniLM-L6-v2](#sentence-transformersparaphrase-minilm-l6-v2)
 - [mixedbread-ai/mxbai-embed-large-v1](#mixedbread-aimxbai-embed-large-v1)
 - [thenlper/gte-small](#thenlpergte-small)
 - [intfloat/e5-base-v2](#intfloate5-base-v2)
 - [BAAI/bge-base-en-v1.5](#baaibge-base-en-v15)
 - [Snowflake/snowflake-arctic-embed-m-v1.5](#snowflakesnowflake-arctic-embed-m-v15)
-- [sentence-transformers/all-mpnet-base-v2](#sentence-transformersall-mpnet-base-v2)
 
 Sparse embedding
 
@@ -68,6 +68,17 @@ query_embedding = model.(query)
 doc_embeddings = model.(docs)
 scores = doc_embeddings.map { |e| e.zip(query_embedding).sum { |d, q| d * q } }
 doc_score_pairs = docs.zip(scores).sort_by { |d, s| -s }
+```
+
+### sentence-transformers/all-mpnet-base-v2
+
+[Docs](https://huggingface.co/sentence-transformers/all-mpnet-base-v2)
+
+```ruby
+sentences = ["This is an example sentence", "Each sentence is converted"]
+
+model = Transformers.pipeline("embedding", "sentence-transformers/all-mpnet-base-v2")
+embeddings = model.(sentences)
 ```
 
 ### sentence-transformers/paraphrase-MiniLM-L6-v2
@@ -158,17 +169,6 @@ input = [
 
 model = Transformers.pipeline("embedding", "Snowflake/snowflake-arctic-embed-m-v1.5")
 embeddings = model.(input, pooling: "cls")
-```
-
-### sentence-transformers/all-mpnet-base-v2
-
-[Docs](https://huggingface.co/sentence-transformers/all-mpnet-base-v2)
-
-```ruby
-sentences = ["This is an example sentence", "Each sentence is converted"]
-
-model = Transformers.pipeline("embedding", "sentence-transformers/all-mpnet-base-v2")
-embeddings = model.(sentences)
 ```
 
 ### opensearch-project/opensearch-neural-sparse-encoding-v1
