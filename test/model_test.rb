@@ -33,6 +33,17 @@ class ModelTest < Minitest::Test
     assert_in_delta 0.4948, doc_score_pairs[1][1]
   end
 
+  # https://huggingface.co/sentence-transformers/paraphrase-MiniLM-L6-v2
+  def test_paraphrase_minilm
+    sentences = ["This is an example sentence", "Each sentence is converted"]
+
+    model = Transformers.pipeline("embedding", "sentence-transformers/paraphrase-MiniLM-L6-v2")
+    embeddings = model.(sentences, normalize: false)
+
+    assert_elements_in_delta [0.067359, 0.783935, 0.270018], embeddings[0][..2]
+    assert_elements_in_delta [0.122117, 0.670228, 0.317166], embeddings[1][..2]
+  end
+
   # https://huggingface.co/mixedbread-ai/mxbai-embed-large-v1
   def test_mxbai_embed
     query_prefix = "Represent this sentence for searching relevant passages: "

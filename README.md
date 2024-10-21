@@ -27,6 +27,7 @@ Embedding
 
 - [sentence-transformers/all-MiniLM-L6-v2](#sentence-transformersall-MiniLM-L6-v2)
 - [sentence-transformers/multi-qa-MiniLM-L6-cos-v1](#sentence-transformersmulti-qa-MiniLM-L6-cos-v1)
+- [sentence-transformers/paraphrase-MiniLM-L6-v2](#sentence-transformersparaphrase-minilm-l6-v2)
 - [mixedbread-ai/mxbai-embed-large-v1](#mixedbread-aimxbai-embed-large-v1)
 - [thenlper/gte-small](#thenlpergte-small)
 - [intfloat/e5-base-v2](#intfloate5-base-v2)
@@ -67,6 +68,17 @@ query_embedding = model.(query)
 doc_embeddings = model.(docs)
 scores = doc_embeddings.map { |e| e.zip(query_embedding).sum { |d, q| d * q } }
 doc_score_pairs = docs.zip(scores).sort_by { |d, s| -s }
+```
+
+### sentence-transformers/paraphrase-MiniLM-L6-v2
+
+[Docs](https://huggingface.co/sentence-transformers/paraphrase-MiniLM-L6-v2)
+
+```ruby
+sentences = ["This is an example sentence", "Each sentence is converted"]
+
+model = Transformers.pipeline("embedding", "sentence-transformers/paraphrase-MiniLM-L6-v2")
+embeddings = model.(sentences)
 ```
 
 ### mixedbread-ai/mxbai-embed-large-v1
