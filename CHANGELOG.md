@@ -1,4 +1,4 @@
-## 0.1.4 (unreleased)
+## 0.1.4 (2024-10-22)
 
 - Added `BertForSequenceClassification`
 
