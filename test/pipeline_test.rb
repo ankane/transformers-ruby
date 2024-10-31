@@ -96,4 +96,13 @@ class PipelineTest < Minitest::Test
     result = fe.("test/support/pipeline-cat-chonk.jpeg")
     assert_in_delta 0.868, result[0][0][0], 0.01
   end
+
+  def test_pipeline_input_works_with_more_than_ten
+    embedding = Transformers.pipeline("embedding")
+    11.times do
+      result = embedding.("Ruby is a programming language created by Matz")
+
+      assert_instance_of(Array, result)
+    end
+  end
 end

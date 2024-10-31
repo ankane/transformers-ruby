@@ -99,7 +99,7 @@ module Transformers
       modelcard: nil,
       framework: nil,
       task: "",
-      device: nil,
+      device: "cpu",
       **kwargs
     )
       if framework.nil?
@@ -113,6 +113,8 @@ module Transformers
       @image_processor = image_processor
       @modelcard = modelcard
       @framework = framework
+      @device = device
+      @device = Torch::Device.new(device) if device.is_a?(String)
 
       if device.nil?
         if Torch::CUDA.available? || Torch::Backends::MPS.available?
