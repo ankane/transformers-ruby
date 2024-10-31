@@ -99,7 +99,7 @@ module Transformers
       modelcard: nil,
       framework: nil,
       task: "",
-      device: "cpu",
+      device: nil,
       **kwargs
     )
       if framework.nil?
@@ -113,8 +113,6 @@ module Transformers
       @image_processor = image_processor
       @modelcard = modelcard
       @framework = framework
-      @device = device
-      @device = Torch::Device.new(device) if device.is_a?(String)
 
       if device.nil?
         if Torch::CUDA.available? || Torch::Backends::MPS.available?
@@ -123,6 +121,22 @@ module Transformers
             " is passed to the `Pipeline` object. Model will be on CPU."
           )
         end
+      end
+
+      if @framework == "pt"
+        if device.is_a?(String)
+          @device = Torch.device(device)
+        else
+          # TODO update default in 0.2.0
+          @device = @model.device
+        end
+      else
+        raise Todo
+      end
+
+      # TODO Fix eql? for Torch::Device in Torch.rb
+      if @device.type != @model.device.type || @device.index != @model.device.index
+        @model.to(@device)
       end
 
       @call_count = 0

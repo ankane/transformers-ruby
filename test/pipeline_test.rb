@@ -101,7 +101,6 @@ class PipelineTest < Minitest::Test
     embedding = Transformers.pipeline("embedding")
     11.times do
       result = embedding.("Ruby is a programming language created by Matz")
-
       assert_instance_of(Array, result)
     end
   end

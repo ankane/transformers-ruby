@@ -56,6 +56,10 @@ module Transformers
   end
 
   module ModuleUtilsMixin
+    def device
+      get_parameter_device(self)
+    end
+
     def get_extended_attention_mask(
       attention_mask,
       input_shape,
@@ -111,6 +115,13 @@ module Transformers
       end
 
       head_mask
+    end
+
+    private
+
+    def get_parameter_device(parameter)
+      # TODO return Torch::Device in Torch.rb
+      Torch.device(parameter.parameters[0].device)
     end
   end
 
