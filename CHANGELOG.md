@@ -1,5 +1,6 @@
 ## 0.1.5 (unreleased)
 
+- Fixed error with pipelines when called more than 10 times
 - Fixed `device` option for pipelines
 - Fixed error with `reranking` pipeline
 
