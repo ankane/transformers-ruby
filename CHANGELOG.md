@@ -1,4 +1,4 @@
-## 0.1.5 (unreleased)
+## 0.1.5 (2024-11-01)
 
 - Fixed error with pipelines when called more than 10 times
 - Fixed `device` option for pipelines
