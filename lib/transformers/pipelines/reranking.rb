@@ -8,7 +8,8 @@ module Transformers
       @tokenizer.(
         [inputs[:query]] * inputs[:documents].length,
         text_pair: inputs[:documents],
-        return_tensors: @framework
+        return_tensors: @framework,
+        padding: true
       )
     end
 

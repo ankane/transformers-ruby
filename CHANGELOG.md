@@ -1,6 +1,7 @@
 ## 0.1.5 (unreleased)
 
 - Fixed `device` option for pipelines
+- Fixed error with `reranking` pipeline
 
 ## 0.1.4 (2024-10-22)
 
