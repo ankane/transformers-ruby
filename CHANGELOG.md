@@ -1,3 +1,7 @@
+## 0.1.5 (unreleased)
+
+- Fixed `device` option for pipelines
+
 ## 0.1.4 (2024-10-22)
 
 - Added `BertForSequenceClassification`

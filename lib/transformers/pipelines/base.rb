@@ -149,6 +149,24 @@ module Transformers
       @model.dtype
     end
 
+    def _ensure_tensor_on_device(inputs, device)
+      # TODO move
+      inputs = inputs.to_h if inputs.is_a?(BatchEncoding)
+
+      if inputs.is_a?(ModelOutput)
+        inputs.instance_variable_get(:@data).transform_values! { |tensor| _ensure_tensor_on_device(tensor, device) }
+        inputs
+      elsif inputs.is_a?(Hash)
+        inputs.transform_values { |tensor| _ensure_tensor_on_device(tensor, device) }
+      elsif inputs.is_a?(Array)
+        inputs.map { |item| _ensure_tensor_on_device(item, device) }
+      elsif inputs.is_a?(Torch::Tensor)
+        inputs.to(device)
+      else
+        inputs
+      end
+    end
+
     def check_model_type(supported_models)
       if !supported_models.is_a?(Array)
         supported_models_names = []
@@ -261,7 +279,10 @@ module Transformers
     end
 
     def forward(model_inputs, **forward_params)
-      _forward(model_inputs, **forward_params)
+      model_inputs = _ensure_tensor_on_device(model_inputs, @device)
+      model_outputs = _forward(model_inputs, **forward_params)
+      model_outputs = _ensure_tensor_on_device(model_outputs, Torch.device("cpu"))
+      model_outputs
     end
 
     def run_single(inputs, preprocess_params, forward_params, postprocess_params)
