@@ -1213,4 +1213,6 @@ module Transformers
       end
     end
   end
+
+  XLMRobertaForSequenceClassification = XlmRoberta::XLMRobertaForSequenceClassification
 end
