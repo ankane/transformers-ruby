@@ -19,4 +19,8 @@ class Minitest::Test
   def ci?
     ENV["CI"]
   end
+
+  def mac?
+    RbConfig::CONFIG["host_os"] =~ /darwin/i
+  end
 end

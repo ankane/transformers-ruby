@@ -97,6 +97,16 @@ class PipelineTest < Minitest::Test
     assert_in_delta 0.868, result[0][0][0], 0.01
   end
 
+  def test_device
+    skip unless mac?
+
+    sentences = ["This is an example sentence", "Each sentence is converted"]
+    embed = Transformers.pipeline("embedding", device: "mps")
+    embeddings = embed.(sentences)
+    assert_elements_in_delta [0.067657, 0.063496, 0.048713], embeddings[0][..2]
+    assert_elements_in_delta [0.086439, 0.10276, 0.0053946], embeddings[1][..2]
+  end
+
   def test_pipeline_input_works_with_more_than_ten
     embedding = Transformers.pipeline("embedding")
     11.times do
