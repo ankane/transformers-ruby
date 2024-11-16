@@ -1,4 +1,5 @@
 module Transformers
+  # TODO remove in 0.2.0
   class SentenceTransformer
     def initialize(model_id)
       @model_id = model_id
