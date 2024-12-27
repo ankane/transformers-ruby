@@ -24,7 +24,7 @@ module Transformers
       def hf_raise_for_status(response, endpoint_name: nil)
         begin
           response.value unless response.is_a?(Net::HTTPRedirection)
-        rescue
+        rescue => e
           error_code = response["X-Error-Code"]
           error_message = response["X-Error-Message"]
 
