@@ -1,3 +1,7 @@
+## 0.1.6 (unreleased)
+
+- Fixed error with failed HTTP requests
+
 ## 0.1.5 (2024-11-01)
 
 - Fixed error with pipelines when called more than 10 times
