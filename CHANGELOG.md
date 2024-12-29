@@ -1,4 +1,4 @@
-## 0.1.6 (unreleased)
+## 0.1.6 (2024-12-29)
 
 - Fixed error with failed HTTP requests
 - Fixed warning with Ruby 3.4
