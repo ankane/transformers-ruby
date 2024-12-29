@@ -21,7 +21,7 @@ jobs:
           unzip -q libtorch.zip
       - uses: ruby/setup-ruby@v1
         with:
-          ruby-version: 3.3
+          ruby-version: 3.4
           bundler-cache: true
       - uses: actions/cache@v4
         with:
