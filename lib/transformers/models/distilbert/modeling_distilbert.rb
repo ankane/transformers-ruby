@@ -36,7 +36,7 @@ module Transformers
 
         # Setting the position-ids to the registered buffer in constructor, it helps
         # when tracing the model without passing position-ids, solves
-        # isues similar to issue #5664
+        # issues similar to issue #5664
         if @position_ids
           position_ids = @position_ids[0.., 0...seq_length]
         else

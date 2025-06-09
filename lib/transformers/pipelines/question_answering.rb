@@ -166,7 +166,7 @@ module Transformers
     end
 
     def preprocess(example, padding: "do_not_pad", doc_stride: nil, max_question_len: 64, max_seq_len: nil)
-      # XXX: This is specal, args_parser will not handle anything generator or dataset like
+      # XXX: This is special, args_parser will not handle anything generator or dataset like
       # For those we expect user to send a simple valid example either directly as a SquadExample or simple dict.
       # So we still need a little sanitation here.
       if example.is_a?(Hash)
