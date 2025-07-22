@@ -5,7 +5,7 @@ require "tokenizers"
 require "torch-rb"
 
 # stdlib
-require "cgi"
+require "cgi/escape"
 require "fileutils"
 require "io/console"
 require "json"
