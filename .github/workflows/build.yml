@@ -5,7 +5,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       BUNDLE_BUILD__TORCH___RB: "--with-torch-dir=/home/runner/libtorch"
-      LIBTORCH_VERSION: 2.5.0
+      LIBTORCH_VERSION: 2.8.0
     steps:
       - uses: actions/checkout@v4
       - uses: actions/cache@v4
@@ -17,7 +17,7 @@ jobs:
         if: steps.cache-libtorch.outputs.cache-hit != 'true'
         run: |
           cd ~
-          wget -q -O libtorch.zip https://download.pytorch.org/libtorch/cpu/libtorch-cxx11-abi-shared-with-deps-$LIBTORCH_VERSION%2Bcpu.zip
+          wget -q -O libtorch.zip https://download.pytorch.org/libtorch/cpu/libtorch-shared-with-deps-$LIBTORCH_VERSION%2Bcpu.zip
           unzip -q libtorch.zip
       - uses: ruby/setup-ruby@v1
         with:
