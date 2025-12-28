@@ -7,8 +7,8 @@ jobs:
       BUNDLE_BUILD__TORCH___RB: "--with-torch-dir=/home/runner/libtorch"
       LIBTORCH_VERSION: 2.8.0
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/cache@v4
+      - uses: actions/checkout@v5
+      - uses: actions/cache@v5
         with:
           path: ~/libtorch
           key: libtorch-${{ env.LIBTORCH_VERSION }}
@@ -23,7 +23,7 @@ jobs:
         with:
           ruby-version: 3.4
           bundler-cache: true
-      - uses: actions/cache@v4
+      - uses: actions/cache@v5
         with:
           path: ~/.cache/huggingface
           key: huggingface
