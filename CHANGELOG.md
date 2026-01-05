@@ -1,3 +1,7 @@
+## 0.1.7 (unreleased)
+
+- Switched to `cgi/escape` for Ruby 4.0
+
 ## 0.1.6 (2024-12-29)
 
 - Fixed error with failed HTTP requests
