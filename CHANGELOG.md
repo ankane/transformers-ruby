@@ -1,4 +1,4 @@
-## 0.1.7 (unreleased)
+## 0.1.7 (2026-01-07)
 
 - Switched to `cgi/escape` for Ruby 4.0
 
