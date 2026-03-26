@@ -1,5 +1,5 @@
 # dependencies
-require "numo/narray"
+require "numo/narray/alt"
 require "safetensors"
 require "tokenizers"
 require "torch-rb"

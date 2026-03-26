@@ -16,7 +16,7 @@ Gem::Specification.new do |spec|
   spec.required_ruby_version = ">= 3.3"
 
   spec.add_dependency "logger"
-  spec.add_dependency "numo-narray", ">= 0.9.2"
+  spec.add_dependency "numo-narray-alt", ">= 0.10"
   spec.add_dependency "safetensors", ">= 0.1.1"
   spec.add_dependency "tokenizers", ">= 0.5.3"
   spec.add_dependency "torch-rb", ">= 0.17.1"
