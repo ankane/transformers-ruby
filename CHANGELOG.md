@@ -1,6 +1,7 @@
 ## 0.2.0 (unreleased)
 
 - Switched to `numo-narray-alt`
+- Removed `SentenceTransformer` class (use `pipeline` instead)
 - Dropped support for Ruby < 3.3
 
 ## 0.1.7 (2026-01-07)
