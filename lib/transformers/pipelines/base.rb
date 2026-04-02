@@ -115,23 +115,24 @@ module Transformers
       @framework = framework
 
       if device.nil?
-        if Torch::CUDA.available? || Torch::Backends::MPS.available?
-          Transformers.logger.warn(
-            "Hardware accelerator e.g. GPU is available in the environment, but no `device` argument" +
-            " is passed to the `Pipeline` object. Model will be on CPU."
-          )
-        end
+        device = 0
       end
 
-      if @framework == "pt"
-        if device.is_a?(String)
-          @device = Torch.device(device)
-        else
-          # TODO update default in 0.2.0
-          @device = @model.device
-        end
+      if device == -1 && !@model.device.nil?
+        device = @model.device
+      end
+      if device.is_a?(Torch::Device)
+        @device = device
+      elsif device.is_a?(String)
+        @device = Torch.device(device)
+      elsif device < 0
+        @device = Torch.device("cpu")
+      elsif Torch::CUDA.available?
+        @device = Torch.device("cuda:%d" % device)
+      elsif Torch::Backends::MPS.available?
+        @device = Torch.device("mps:%d" % device)
       else
-        raise Todo
+        @device = Torch.device("cpu")
       end
 
       # TODO Fix eql? for Torch::Device in Torch.rb
