@@ -582,7 +582,7 @@ module Transformers
             raise Todo
           end
 
-           # Etag must exist
+          # Etag must exist
           etag = metadata.etag
           if etag.nil?
             raise Todo
@@ -668,7 +668,7 @@ module Transformers
             message += " (hf_transfer: true)"
           end
           Transformers.logger.info(message)
-          incomplete_path.unlink #(missing_ok=True)
+          incomplete_path.unlink
         end
 
         incomplete_path.open("ab") do |f|

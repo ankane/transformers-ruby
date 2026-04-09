@@ -880,7 +880,7 @@ module Transformers
         end
 
         # copy state_dict so _load_from_state_dict can modify it
-        metadata = nil #getattr(state_dict, "_metadata", None)
+        metadata = nil # TODO
         state_dict = state_dict.dup
         if !metadata.nil?
           state_dict._metadata = metadata
