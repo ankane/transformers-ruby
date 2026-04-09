@@ -39,7 +39,7 @@ module Transformers
     end
 
     def to_tuple
-      self.class.attributes.map { |k| @data[k] }.compact
+      self.class.attributes.filter_map { |k| @data[k] }
     end
   end
 

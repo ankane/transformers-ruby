@@ -24,7 +24,7 @@ module Transformers
       if args.any?
         if args.length == 1
           inputs = args[0]
-        elsif args.length == 2 && args.all? { |el| el.is_a?(String) }
+        elsif args.length == 2 && args.all?(String)
           inputs = [{question: args[0], context: args[1]}]
         else
           inputs = args.to_a
