@@ -1045,7 +1045,6 @@ module Transformers
         output_hidden_states: nil,
         return_dict: nil
       )
-
         return_dict = !return_dict.nil? ? return_dict : @config.use_return_dict
 
         outputs = @deberta.(input_ids, attention_mask: attention_mask, token_type_ids: token_type_ids, position_ids: position_ids, inputs_embeds: inputs_embeds, output_attentions: output_attentions, output_hidden_states: output_hidden_states, return_dict: return_dict)
@@ -1094,7 +1093,6 @@ module Transformers
         output_hidden_states: nil,
         return_dict: nil
       )
-
         return_dict = !return_dict.nil? ? return_dict : @config.use_return_dict
 
         outputs = @deberta.(input_ids, attention_mask: attention_mask, token_type_ids: token_type_ids, position_ids: position_ids, inputs_embeds: inputs_embeds, output_attentions: output_attentions, output_hidden_states: output_hidden_states, return_dict: return_dict)
